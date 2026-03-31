@@ -597,7 +597,108 @@ void func_ovl8_803780B8(Sprite* arg0, DBMenuPosition* arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/ovl8/ovl8_8/func_ovl8_80379D74.s")
 
 // 0x8037A0FC
-#pragma GLOBAL_ASM("asm/nonmatchings/ovl8/ovl8_8/func_ovl8_8037A0FC.s")
+void func_ovl8_8037A0FC(Sprite* sprite, DBMenuPosition* dst_rect, u8* dst_buffer) 
+{
+    DBMenuPosition spB0; // src_rect
+    DBMenuPosition spA8; // intersection
+    DBMenuPosition spA0; // tile_rect
+    DBMenuPosition sp98; // tile_clip
+    s32 s0; // tile_x
+    s32 sp90; // tile_y
+    s32 sp8C; // num_tiles_x
+    s32 sp88; // num_tiles_y
+    s32 sp84; // tiles_per_row
+    s32 s3; // bitmap_width
+    s32 s6; // bitmap_height
+    s32 sp78; // tile_x_start
+    s32 sp74; // tile_y_start
+    s32 sp70; // dst_stride
+    s32 sp6C; // bytes_per_pixel
+    u8* s1; // dst_row_ptr
+    s32 s7;
+    Bitmap* bitmap;
+    u8* sp5C; // dst_buffer_offset
+    
+    // Copy destination rect
+    *(DBMenuPosition*)&spB0 = *dst_rect;
+    
+    // Determine bytes per pixel
+    sp6C = sp6C = (sprite->bmsiz == 1) ? 1 : (sprite->bmsiz == 2) ? 2 : 4;
+
+    // Set up sprite bounds
+    sp98.x = sp98.y = 0;
+    sp98.w = sprite->width;
+    sp98.h = sprite->height;
+
+    // Clip to sprite bounds
+    func_ovl8_8037A67C(&spB0, &sp98, &spA8);
+
+    if (func_ovl8_8037AA5C(&spA8) == 0) 
+    {
+        // Calculate starting buffer offset
+        sp5C = dst_buffer;
+        s7 = (spA8.x - spB0.x);
+        sp5C += (((spA8.y - spB0.y) * dst_rect->w + s7) * sp6C);
+        
+        s3 = sprite->bitmap->width;
+        s6 = sprite->bitmap->actualHeight;
+        
+        // Calculate starting tile indices
+        sp78 = spA8.x / s3;
+        sp74 = spA8.y / s6;
+        
+        // Calculate tiles per row
+        sp84 = (sprite->width / s3) + (sprite->width % s3 ? 1 : 0) + (0, 0);
+        
+        // Calculate number of tiles to cover in X
+        sp8C = (spA8.w / s3) + (spA8.w % s3 ? 1 : 0) + (0, 1);
+        
+        // Calculate number of tiles to cover in Y
+        sp88 = (spA8.h / s6) + (spA8.h % s6 ? 1 : 0) + (0, 1);
+        
+        // Loop through tiles vertically
+        for (sp90 = 0; sp90 < sp88; sp90++)
+        {
+            s1 = sp5C;
+            // sp70 = s7;
+            
+            // Loop through tiles horizontally
+            for (s0 = 0; s0 < sp8C; s0++) 
+            {
+                // Set up tile rectangle in sprite space
+                spA0.x = (sp78 + s0) * s3;
+                spA0.y = (sp74 + sp90) * s6;
+                spA0.w = s3;
+                spA0.h = s6;
+                
+                // Check if tile intersects with our read region
+                if (func_ovl8_8037A67C(&spA0, &spA8, &sp98) != 0) 
+                {
+                    // Calculate offset within tile
+                    sp98.x %= s3;
+                    sp98.y %= s6;
+                    
+                    // Read from this tile's bitmap
+                    bitmap = sprite->bitmap + ((sp74 + sp90) * sp84) + (s0) + (sp78);
+                    
+                    func_ovl8_80379D74(
+                        s1, 
+                        dst_rect->w, 
+                        bitmap, 
+                        sprite->bmsiz, 
+                        &sp98
+                    );
+
+                    sp70 = sp98.h;
+                }
+                
+                s1 += sp98.w * sp6C;
+            }
+            
+            sp5C += sp70 * dst_rect->w * sp6C;
+        }
+    }
+}
 
 // 0x8037A5B8
 void func_ovl8_8037A5B8(Sprite* arg0, DBMenuPosition* arg1, s32 arg2)
