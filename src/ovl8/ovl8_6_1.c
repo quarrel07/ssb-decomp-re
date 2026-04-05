@@ -5,12 +5,6 @@
 extern s32 gSYVideoResHeight;
 extern s32 gSYVideoResWidth;
 
-typedef struct Vec2hPair
-{
-	Vec2h pos;
-	Vec2h pos2;
-} Vec2hPair;
-
 typedef struct dbUnknown6_1_spriteContainer {
 	u8 dbUnknown6_1_spriteContainer_0x0[0x10];
 	Sprite dbUnknown6_1_spriteContainer_0x10;
@@ -73,9 +67,9 @@ dbUnknownLink* func_ovl8_80375920(dbUnknownLink* arg0, dbUnknownLinkStruct* arg1
         if (arg1 == NULL)
         {
             arg1 = &arg0->unk_dbunklink_0x14.unk_dbunkstruct_0xC;
-            #line 72
+            #line 68
             func_ovl8_803717E0(&arg0->unk_dbunklink_0x14.unk_dbunkstruct_0xC);
-            #line 78
+            #line 73
         }
         func_ovl8_80371FB0(arg0, arg1);
         arg0->unk_dbunklink_0xC = &D_ovl8_80389830;
@@ -338,10 +332,10 @@ dbUnknown5* func_ovl8_80376010(dbUnknown5 *arg0, dbUnknownLinkStruct *arg1, dbUn
         {
             arg1 = &arg0->unk_dbunk5_0x4C;
             arg2 = &arg0->unk_dbunk5_0xA8;
-            #line 337
+            #line 332
             func_ovl8_803717E0(arg1, arg2);
             func_ovl8_8037C2D0(arg2);
-            #line 344
+            #line 339
         }
         
         func_ovl8_80372844(arg0, arg1, arg2, arg3);
@@ -402,9 +396,9 @@ void func_ovl8_803761F4(dbUnknownS38 *arg0, s32 arg1)
 		arg0->unk_dbunks38_0x1C->unk_dbunklink_0x8 = &D_ovl8_80389C00;
 		arg0->unk_dbunks38_0x38.unk_dbunkstruct_0xC = &D_ovl8_80389C28;
 
-        #line 401
+        #line 396
 		func_ovl8_803720D4(&arg0->unk_dbunks38_0x38, 0);
-        #line 407
+        #line 402
 		func_ovl8_8037295C(arg0, 0);
 
 		if (arg1 != 0)

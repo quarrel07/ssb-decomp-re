@@ -402,4 +402,10 @@ typedef struct dbUnknownS14 {
     s32 dbUnknownS14_0x10;
 } dbUnknownS14;
 
+typedef struct Vec2hPair
+{
+	Vec2h pos;
+	Vec2h pos2;
+} Vec2hPair;
+
 #endif
