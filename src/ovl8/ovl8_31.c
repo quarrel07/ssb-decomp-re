@@ -310,7 +310,235 @@ void func_ovl8_80386AFC(dbUnknownS38* arg0, s32 arg1)
 }
 
 // 0x80386BE0
+#ifdef NON_MATCHING
+void func_ovl8_80386BE0(u8* out, u8** argList)
+{
+    s32 *argPtr;
+    s32 argParity;
+    s32 size;
+    s32 fieldWidth;
+    s32 zeroPad;
+    s32 leftAlign;
+    s64 sp74;
+    s32 sp70;
+    s32 var_v0_3;
+    s32 temp_a1;
+    s32 precision;
+    s32 var_v0_2;
+    f32 sp58;
+    u8 temp_t2;
+    u8 temp_t1;
+    u8 temp_t9;
+    u8 var_a0;
+    u8 var_v1;
+    u8 var_v1_2;
+    u8* temp_s0;
+    u8* temp_v0;
+    u8* temp_v0_2;
+    u8* temp_v0_3;
+    u8* fmtPtr;
+    u8* outPtr;
+
+    argPtr = (s32*)&argList[1];
+    outPtr = out;
+    fmtPtr = (u8*)*argList;
+
+    var_v0_3 = ((uintptr_t)argPtr & 7) ? 1 : 0;
+
+    var_v1 = *fmtPtr;
+    argParity = var_v0_3;
+    sp70 = 1;
+
+    while (*fmtPtr)
+    {
+        if (1);
+        var_v1 = *fmtPtr;
+        if (var_v1 & 0x80)
+        {
+            u8* v0;
+            u8* v1;
+
+            v1 = fmtPtr++;
+            if (1);
+            v0 = outPtr++;
+            *v0 = *v1;
+            
+            v0 = outPtr++;
+            v1 = fmtPtr++;
+            *v0 = *v1;
+        }
+        else
+        {
+            precision = 0;
+
+            if (*fmtPtr != '%')
+            {
+                u8* v1;
+                temp_v0_2 = outPtr++;
+                v1 = fmtPtr++;
+                *temp_v0_2 = *v1;
+            }
+            else
+            {
+                var_a0 = fmtPtr[1];
+                fmtPtr++;
+                fieldWidth = 0;
+                zeroPad = 0;
+                leftAlign = 0;
+                size = 4;
+                var_v1_2 = var_a0;
+
+                if (var_a0 == '-')
+                {
+                    var_a0 = fmtPtr[1];
+                    leftAlign = sp70;
+                    fmtPtr++;
+                    var_v1_2 = var_a0;
+                }
+
+                if (var_v1_2 == '0')
+                {
+                    var_a0 = fmtPtr[1];
+                    zeroPad = sp70;
+                    fmtPtr++;
+                    var_v1_2 = var_a0;
+                }
+
+                if (((s32) var_v1_2 >= '1') && ((s32) var_v1_2 <= '9'))
+                {
+                    fieldWidth = stringToNumber(fmtPtr);
+                    var_a0 = *fmtPtr;
+                    var_v1_2 = var_a0;
+
+                    if (((s32) var_a0 >= '0') && ((s32) var_v1_2 <='9'))
+                    {
+                        while (TRUE)
+                        {
+                            var_a0 = fmtPtr[1];
+                            fmtPtr++;
+                            var_v1_2 = var_a0;
+                            if (((s32) var_a0 >= '0') && ((s32) var_v1_2 <='9'))
+                            {
+                                continue;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                if (var_v1_2 == '.')
+                {
+                    var_a0 = fmtPtr[1];
+                    fmtPtr++;
+                    var_v1_2 = var_a0;
+
+                    if (((s32) var_a0 >= '0') && ((s32) var_v1_2 <= '9'))
+                    {
+                        precision = stringToNumber(fmtPtr);
+                        var_a0 = *fmtPtr;
+                        var_v1_2 = var_a0;
+
+                        if (((s32) var_a0 >= '0') && ((s32) var_v1_2 <= '9'))
+                        {
+                            while (TRUE)
+                            {
+                                var_a0 = fmtPtr[1];
+                                fmtPtr++;
+                                var_v1_2 = var_a0;
+                                if (((s32) var_a0 >= '0') && ((s32) var_v1_2 <= '9'))
+                                {
+                                    continue;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                var_v0_2 = var_v1_2;
+                switch (var_v1_2)
+                {
+                case 'i':
+                    var_a0 = fmtPtr[1];
+                    fmtPtr++;
+                    var_v0_2 = var_a0;
+                    break;
+                case 'l':
+                    var_a0 = fmtPtr[1];
+                    size = 8;
+                    fmtPtr++;
+                    var_v0_2 = var_a0;
+                    break;
+                }
+
+                switch (var_v0_2)
+                {
+                case 'c':
+                {
+                    u8* out_c = outPtr++;
+                    *out_c = *(u8*)argPtr++;
+                    argParity = sp70 - argParity;
+                    break;
+                }
+                case 's':
+                    temp_a1 = (s32)*argPtr;
+                    argPtr++;
+                    argParity = sp70 - argParity;
+                    var_v0_3 = func_ovl8_80386FE0(outPtr, temp_a1, leftAlign, fieldWidth, precision);
+                    outPtr = &outPtr[var_v0_3];
+                    break;
+                case 'd':
+                    switch (size)
+                    {
+                    case 4:
+                        sp74 = *argPtr;
+                        argParity = sp70 - argParity;
+                        break;
+                    case 8:
+                        if (argParity != 0) {
+                            argParity = 0;
+                            argPtr++;
+                        }
+                        sp74 = *((s64*)argPtr);
+                        break;
+                    }
+
+                    argPtr = (s32*)((u8*)argPtr + size);
+                    var_v0_3 = func_ovl8_80387154(outPtr, sp74, FALSE, leftAlign, zeroPad, fieldWidth, precision);
+                    outPtr = &outPtr[var_v0_3];
+                    break;
+                case 'f':
+                    if (argParity != 0) 
+                    {
+                        argParity = 0;
+                        argPtr++;
+                    }
+                    sp58 = (*(f64*)argPtr);
+                    argPtr += 2;
+                    sp74 = *(s64*)&sp58;
+                    var_v0_3 = func_ovl8_80387154(outPtr, sp74, TRUE, leftAlign, zeroPad, fieldWidth, precision);
+                    outPtr = &outPtr[var_v0_3];
+                    break;
+                default:
+                {
+                    u8* out_def = outPtr;
+                    outPtr++;
+                    *out_def = var_a0;
+                    break;
+                }
+                }
+
+                fmtPtr++;
+            }
+        }
+
+    }
+
+    *outPtr = '\0';
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/ovl8/ovl8_31/func_ovl8_80386BE0.s")
+#endif
 
 // 0x80386F90
 int stringToNumber(char *string)
