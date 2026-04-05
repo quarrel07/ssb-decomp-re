@@ -591,7 +591,98 @@ void func_ovl8_803780B8(Sprite* arg0, DBMenuPosition* arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/ovl8/ovl8_8/func_ovl8_80379070.s")
 
 // 0x803798A0
-#pragma GLOBAL_ASM("asm/nonmatchings/ovl8/ovl8_8/func_ovl8_803798A0.s")
+void func_ovl8_803798A0(Sprite* sprite, u8* dst, s32 dst_w, s32 dst_h, s16* pos, s32 arg5)
+{
+	DBMenuPosition spB0;
+	DBMenuPosition spA8;
+	DBMenuPosition spA0;
+	DBMenuPosition sp98;
+	s32 j;
+	s32 i;
+	s32 sp8C;
+	s32 sp88;
+	s32 sp84;
+	s32 s3;
+	s32 s6;
+	s32 sp78;
+	s32 sp74;
+	s32 sp70;
+	s32 sp6C;
+	u8* s1;
+	s32 s7;
+	s32 pad;
+	u8* dst_ptr;
+
+	D_ovl8_80389F60 = arg5;
+
+	sp6C = sp6C = (sprite->bmsiz == 1) ? 1 : (sprite->bmsiz == 2) ? 2 : 4;
+
+	spB0.x = pos[0];
+	spB0.y = pos[1];
+	spB0.w = dst_w;
+	spB0.h = dst_h;
+
+	sp98.x = sp98.y = 0;
+	sp98.w = sprite->width;
+	sp98.h = sprite->height;
+
+	func_ovl8_8037A67C(&spB0, &sp98, &spA8);
+
+	if (func_ovl8_8037AA5C(&spA8) == 0)
+	{
+		func_ovl8_8037A67C(&spA8, &D_ovl8_80389F68, &spA8);
+
+		if (func_ovl8_8037AA5C(&spA8) == 0)
+		{
+			dst_ptr = dst;
+            s7 = (spA8.x - spB0.x);
+            dst_ptr += (((spA8.y - spB0.y) * dst_w + s7) * sp6C);
+
+			s3 = sprite->bitmap->width;
+			s6 = sprite->bitmap->actualHeight;
+
+			sp78 = spA8.x / s3;
+			sp74 = spA8.y / s6;
+
+			sp84 = (sprite->width / s3) + (sprite->width % s3 ? 1 : 0) + (0, 0);
+			sp8C = (spA8.w / s3) + (spA8.w % s3 ? 1 : 0) + (0, 1);
+			sp88 = (spA8.h / s6) + (spA8.h % s6 ? 1 : 0) + (0, 1);
+
+			for (i = 0; i < sp88; i++)
+			{
+				s1 = dst_ptr;
+
+				for (j = 0; j < sp8C; j++)
+				{
+					spA0.x = (sp78 + j) * s3;
+					spA0.y = (sp74 + i) * s6;
+					spA0.w = s3;
+					spA0.h = s6;
+
+					if (func_ovl8_8037A67C(&spA0, &spA8, &sp98) != 0)
+					{
+						sp98.x %= s3;
+						sp98.y %= s6;
+
+						func_ovl8_80379070(
+							s1,
+							dst_w,
+							sprite->bitmap + ((sp74 + i) * sp84) + j + sp78,
+							sprite->bmsiz,
+							&sp98
+						);
+
+						sp70 = sp98.h;
+					}
+
+					s1 += sp98.w * sp6C;
+				}
+
+				dst_ptr += sp70 * dst_w * sp6C;
+			}
+		}
+	}
+}
 
 // 0x80379D74
 #pragma GLOBAL_ASM("asm/nonmatchings/ovl8/ovl8_8/func_ovl8_80379D74.s")
