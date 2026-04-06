@@ -13,26 +13,28 @@ esac
 
 if [ "$DETECTED_OS" = "linux" ]
 then
-	missingAptPackages=""
-	which git 2>&1 > /dev/null
-	if [ $? != 0 ] ; then missingAptPackages=$"${missingAptPackages}git " ; fi
-	which python3 2>&1 > /dev/null
-	if [ $? != 0 ] ; then missingAptPackages=$"${missingAptPackages}python3 " ; fi
-	which mips-linux-gnu-ld 2>&1 > /dev/null
-	if [ $? != 0 ] ; then missingAptPackages=$"${missingAptPackages}binutils-mips-linux-gnu " ; fi
-	which clang 2>&1 > /dev/null
-	if [ $? != 0 ] ; then missingAptPackages=$"${missingAptPackages}clang " ; fi
-	if [[ $(dpkg -l | grep -c build-essential) == 0 ]] ; then missingAptPackages=$"${missingAptPackages}build-essential " ; fi
-	if [[ $(dpkg -l | grep -c gcc-multilib) == 0 ]] ; then missingAptPackages=$"${missingAptPackages}gcc-multilib " ; fi
-	if [[ $(dpkg -l | grep -c libcapstone-dev) == 0 ]] ; then missingAptPackages=$"${missingAptPackages}libcapstone-dev " ; fi
-	if [[ $(dpkg -l | grep -c python3-pip) == 0 ]] ; then missingAptPackages=$"${missingAptPackages}python3-pip " ; fi
-	if [[ $(dpkg -l | grep -c ripgrep) == 0 ]] ; then missingAptPackages=$"${missingAptPackages}ripgrep " ; fi
-	if [[ $(dpkg -l | grep -c clang-format) == 0 ]] ; then missingAptPackages=$"${missingAptPackages}clang-format " ; fi
-	if [[ $(dpkg -l | grep -P "\scurl\s" -c) == 0 ]] ; then missingAptPackages=$"${missingAptPackages}curl " ; fi
-
-	if [ ! -z "$missingAptPackages" ]
+	missingPackages=""
+	if command -v apt > /dev/null 2>&1
 	then
-		sudo apt install ${missingAptPackages}
+
+		requiredPackages="git python3 clang curl binutils-mips-linux-gnu build-essential python3-pip ripgrep gcc-multilib clang-format libcapstone-dev"
+		for package in $requiredPackages; do
+			dpkg -s "$package" > /dev/null 2>&1 || missingPackages="${missingPackages}${package} "
+		done
+		if [ -n "$missingPackages" ]
+		then
+			sudo apt install ${missingPackages}
+		fi
+	elif command -v pacman > /dev/null 2>&1
+	then
+		requiredPackages="git python clang curl lib32-glibc python-pip ripgrep"
+		for package in $requiredPackages; do
+			pacman -Qi "$package" > /dev/null 2>&1 || missingPackages="${missingPackages}${package} "
+		done
+		if [ -n "$missingPackages" ]
+		then
+			sudo pacman -S ${missingPackages}
+		fi
 	fi
 fi
 

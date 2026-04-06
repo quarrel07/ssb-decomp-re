@@ -35,15 +35,18 @@ SKIP_DEPS := 1
 endif
 
 UNAME_S := $(shell uname -s)
+LD_MIPS := $(shell command -v mips-linux-gnu-ld 2>/dev/null)
 ifeq ($(OS),Windows_NT)
 $(error Native Windows is currently unsupported for building this repository, use WSL instead c:)
 else ifeq ($(UNAME_S),Darwin)
-    MAKE := gmake
-    BIG_MIPS_OBJCOPY_TARGET := elf32-bigmips
-    BINUTILS_PREFIX := mips-elf
-else ifeq ($(UNAME_S),Linux)
-    BIG_MIPS_OBJCOPY_TARGET := elf32-tradbigmips
-    BINUTILS_PREFIX := mips-linux-gnu
+	MAKE := gmake
+endif
+ifeq ($(LD_MIPS),)
+	BIG_MIPS_OBJCOPY_TARGET := elf32-bigmips
+	BINUTILS_PREFIX := mips-elf
+else
+	BIG_MIPS_OBJCOPY_TARGET := elf32-tradbigmips
+	BINUTILS_PREFIX := mips-linux-gnu
 endif
 
 ifeq ($(VERBOSE),0)
