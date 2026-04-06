@@ -2576,7 +2576,7 @@ LBParticle* efManagerFlameLRMakeEffect(Vec3f *pos, s32 lr)
 }
 
 // 0x800FE9B4
-LBParticle* efManagerFlameRandgcMakeEffect(Vec3f *pos)
+LBParticle* efManagerFlameRandomMakeEffect(Vec3f *pos)
 {
     GObj *effect_gobj;
     LBParticle *pc;
@@ -3268,7 +3268,7 @@ GObj* efManagerDamageSpawnOrbsMakeEffect(Vec3f *pos)
 }
 
 // 0x800FFB38
-GObj* efManagerDamageSpawnOrbsRandgcMakeEffect(Vec3f *pos)
+GObj* efManagerDamageSpawnOrbsRandomMakeEffect(Vec3f *pos)
 {
     if (syUtilsRandIntRange(4) != 0)
     {
@@ -3511,7 +3511,7 @@ GObj* efManagerDamageSpawnSparksMakeEffect(Vec3f *pos, s32 lr)
 }
 
 // 0x80100218
-GObj* efManagerDamageSpawnSparksRandgcMakeEffect(Vec3f *pos, s32 lr)
+GObj* efManagerDamageSpawnSparksRandomMakeEffect(Vec3f *pos, s32 lr)
 {
     if (syUtilsRandIntRange(4) != 0)
     {
@@ -3592,7 +3592,7 @@ GObj* efManagerDamageSpawnMDustMakeEffect(Vec3f *pos, s32 lr)
 }
 
 // 0x80100440
-GObj* efManagerDamageSpawnMDustRandgcMakeEffect(Vec3f *pos, s32 lr)
+GObj* efManagerDamageSpawnMDustRandomMakeEffect(Vec3f *pos, s32 lr)
 {
     if (syUtilsRandIntRange(4) != 0)
     {

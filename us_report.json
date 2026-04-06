@@ -19971,7 +19971,7 @@
           }
         },
         {
-          "name": "efManagerFlameRandgcMakeEffect",
+          "name": "efManagerFlameRandomMakeEffect",
           "size": "420",
           "fuzzy_match_percent": 100.0,
           "metadata": {
@@ -20091,7 +20091,7 @@
           }
         },
         {
-          "name": "efManagerDamageSpawnOrbsRandgcMakeEffect",
+          "name": "efManagerDamageSpawnOrbsRandomMakeEffect",
           "size": "60",
           "fuzzy_match_percent": 100.0,
           "metadata": {
@@ -20171,7 +20171,7 @@
           }
         },
         {
-          "name": "efManagerDamageSpawnSparksRandgcMakeEffect",
+          "name": "efManagerDamageSpawnSparksRandomMakeEffect",
           "size": "64",
           "fuzzy_match_percent": 100.0,
           "metadata": {
@@ -20195,7 +20195,7 @@
           }
         },
         {
-          "name": "efManagerDamageSpawnMDustRandgcMakeEffect",
+          "name": "efManagerDamageSpawnMDustRandomMakeEffect",
           "size": "64",
           "fuzzy_match_percent": 100.0,
           "metadata": {

@@ -1903,7 +1903,7 @@ void* ftParamMakeEffect(GObj *fighter_gobj, s32 effect_id, s32 joint_id, Vec3f *
 
     case nEFKindFlameRandom:
         ftParamGetEffectJointPosition(fp, &pos);
-        effect = efManagerFlameRandgcMakeEffect(&pos);
+        effect = efManagerFlameRandomMakeEffect(&pos);
         break;
 
     case nEFKindFlameStatic:

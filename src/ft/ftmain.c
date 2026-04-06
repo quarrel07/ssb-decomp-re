@@ -2737,16 +2737,16 @@ void ftMainProcessHitCollisionStatsMain(GObj *fighter_gobj)
 
                 if (ft_attack_coll->fgm_level > 0) // Changed this to > 0 for now, makes a bit more sense to me since it only does this on moves with hit SFX levels greater than weak (0)
                 {
-                    efManagerDamageSpawnOrbsRandgcMakeEffect(&pos);
+                    efManagerDamageSpawnOrbsRandomMakeEffect(&pos);
 
                     switch (this_fp->attr->is_metallic)
                     {
                     case FALSE:
-                        efManagerDamageSpawnSparksRandgcMakeEffect(&pos, this_fp->lr);
+                        efManagerDamageSpawnSparksRandomMakeEffect(&pos, this_fp->lr);
                         break;
 
                     case TRUE:
-                        efManagerDamageSpawnMDustRandgcMakeEffect(&pos, this_fp->lr);
+                        efManagerDamageSpawnMDustRandomMakeEffect(&pos, this_fp->lr);
                         break;
                     }
                 }
